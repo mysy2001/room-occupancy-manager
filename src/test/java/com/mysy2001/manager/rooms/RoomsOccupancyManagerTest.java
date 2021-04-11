@@ -18,7 +18,7 @@ class RoomsOccupancyManagerTest {
         final int freePremiumRooms = 3;
         final int freeEconomyRooms = 3;
 
-        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancy(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167));
 
@@ -32,7 +32,7 @@ class RoomsOccupancyManagerTest {
         final int freePremiumRooms = 7;
         final int freeEconomyRooms = 5;
 
-        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancy(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(OccupancyDetails.of(6, 1054), OccupancyDetails.of(4, 189));
 
@@ -44,7 +44,7 @@ class RoomsOccupancyManagerTest {
         final int freePremiumRooms = 2;
         final int freeEconomyRooms = 7;
 
-        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancy(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(OccupancyDetails.of(2, 583), OccupancyDetails.of(4, 189));
 
@@ -56,7 +56,7 @@ class RoomsOccupancyManagerTest {
         final int freePremiumRooms = 7;
         final int freeEconomyRooms = 1;
 
-        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancy(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(OccupancyDetails.of(7, 1153), OccupancyDetails.of(1, 45));
 

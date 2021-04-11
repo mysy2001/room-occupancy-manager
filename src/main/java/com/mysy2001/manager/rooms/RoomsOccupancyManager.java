@@ -12,7 +12,7 @@ public class RoomsOccupancyManager {
 
     private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
 
-    RoomsOccupancyRate calculateOccupancyRate(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
+    RoomsOccupancyRate calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
