@@ -13,14 +13,16 @@ import lombok.Value;
 
 class RoomsOccupancyManagerTest {
 
+    private final int[] requestedRoomPrices = new int[] { 23, 45, 155, 374, 22, 99, 100, 101, 115, 209 };
+
+    private final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
+
     @Test
     void should_calculate_rooms_occupancy_when_available_are_3_premium_rooms_and_3_economy_rooms() {
 
-        final int[] requestedRoomPrices = new int[] { 23, 45, 155, 374, 22, 99, 100, 101, 115, 209 };
         final int freePremiumRooms = 3;
         final int freeEconomyRooms = 3;
 
-        final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
         final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(3, 738, 3, 167);
@@ -32,11 +34,9 @@ class RoomsOccupancyManagerTest {
     @Test
     void should_calculate_rooms_occupancy_when_available_are_7_premium_rooms_and_5_economy_rooms() {
 
-        final int[] requestedRoomPrices = new int[] { 23, 45, 155, 374, 22, 99, 100, 101, 115, 209 };
         final int freePremiumRooms = 7;
         final int freeEconomyRooms = 5;
 
-        final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
         final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(6, 1054, 4, 189);
@@ -60,23 +60,20 @@ class RoomsOccupancyRate {
 
 class RoomsOccupancyManager {
 
+    private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
+
     RoomsOccupancyRate calculateOccupancyRate(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
 
-        final int[] priceOrderedDesc = IntStream.of(requestedRoomPrices)
-                .boxed()
-                .sorted(Comparator.reverseOrder())
-                .mapToInt(i -> i)
-                .toArray();
-
+        final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumRooms = new ArrayList<>(freePremiumRooms);
         final List<Integer> economyRooms = new ArrayList<>(freeEconomyRooms);
         for (int price : priceOrderedDesc) {
-            if ( premiumRooms.size() < freePremiumRooms && price >= 100) {
+            if ( premiumRooms.size() < freePremiumRooms && price >= LOWER_PREMIUM_PRICE_LIMIT ) {
                 premiumRooms.add(price);
                 continue;
             }
 
-            if ( economyRooms.size() < freeEconomyRooms && price < 100) {
+            if ( economyRooms.size() < freeEconomyRooms && price < LOWER_PREMIUM_PRICE_LIMIT ) {
                 economyRooms.add(price);
             }
         }
@@ -86,4 +83,11 @@ class RoomsOccupancyManager {
                 .reduce(0, Integer::sum));
     }
 
+    private int[] orderPricesDescending(final int[] requestedRoomPrices) {
+        return IntStream.of(requestedRoomPrices)
+                .boxed()
+                .sorted(Comparator.reverseOrder())
+                .mapToInt(i -> i)
+                .toArray();
+    }
 }
