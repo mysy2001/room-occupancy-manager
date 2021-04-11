@@ -9,7 +9,7 @@ import lombok.Value;
 class RoomsOccupancyManagerTest {
 
     @Test
-    void should_calculate_rooms_occupancy() {
+    void should_calculate_rooms_occupancy_when_available_are_3_premium_rooms_and_3_economy_rooms() {
 
         final int[] requestedRoomPrices = new int[] {
                 23, 45, 155, 374, 22, 99, 100, 101, 115, 209
@@ -21,6 +21,24 @@ class RoomsOccupancyManagerTest {
         final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
 
         final RoomsOccupancyRate expected = RoomsOccupancyRate.of(3, 738, 3,167);
+
+        assertThat(result).isEqualTo(expected);
+
+    }
+
+    @Test
+    void should_calculate_rooms_occupancy_when_available_are_7_premium_rooms_and_5_economy_rooms() {
+
+        final int[] requestedRoomPrices = new int[] {
+                23, 45, 155, 374, 22, 99, 100, 101, 115, 209
+        };
+        final int freePremiumRooms = 7;
+        final int freeEconomyRooms = 5;
+
+        final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+
+        final RoomsOccupancyRate expected = RoomsOccupancyRate.of(6, 1054, 4,189);
 
         assertThat(result).isEqualTo(expected);
     }
