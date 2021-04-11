@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.mysy2001.manager.rooms.occupancy.OccupancyDetails;
+
 public class RoomsOccupancyManager {
 
     private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
@@ -28,11 +30,11 @@ public class RoomsOccupancyManager {
         } else {
             premiumRooms = premiumCandidates.subList(0, Math.min(premiumCandidatesCount, freePremiumRooms));
             economyRooms = economyCandidates.subList(0, Math.min(economyCandidatesCount, freeEconomyRooms));
-
         }
-        return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
-                .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
-                .reduce(0, Integer::sum));
+
+        final OccupancyDetails premiumOccupancyDetails = createOccupancyDetails(premiumRooms);
+        final OccupancyDetails economyOccupancyDetails = createOccupancyDetails(economyRooms);
+        return RoomsOccupancyRate.of(premiumOccupancyDetails, economyOccupancyDetails);
     }
 
     private void splitPremiumAndEconomyCandidates(int[] priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
@@ -52,5 +54,10 @@ public class RoomsOccupancyManager {
                 .sorted(Comparator.reverseOrder())
                 .mapToInt(i -> i)
                 .toArray();
+    }
+
+    private OccupancyDetails createOccupancyDetails(List<Integer> premiumRooms) {
+        return OccupancyDetails.of(premiumRooms.size(), premiumRooms.stream()
+                .reduce(0, Integer::sum));
     }
 }

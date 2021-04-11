@@ -1,16 +1,14 @@
 package com.mysy2001.manager.rooms;
 
+import com.mysy2001.manager.rooms.occupancy.OccupancyDetails;
+
 import lombok.Value;
 
 @Value(staticConstructor = "of")
 public class RoomsOccupancyRate {
 
-    int premiumRoomsUsage;
+    OccupancyDetails premiumOccupancyDetails;
 
-    int premiumRoomsPrice;
-
-    int economyRoomsUsage;
-
-    int economyRoomsPrice;
+    OccupancyDetails economyOccupancyDetails;
 
 }
