@@ -3,6 +3,7 @@ package com.mysy2001.manager.rooms;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -89,22 +90,53 @@ class RoomsOccupancyManager {
     RoomsOccupancyRate calculateOccupancyRate(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
-        final List<Integer> premiumRooms = new ArrayList<>(freePremiumRooms);
-        final List<Integer> economyRooms = new ArrayList<>(freeEconomyRooms);
-        for (int price : priceOrderedDesc) {
-            if ( premiumRooms.size() < freePremiumRooms && price >= LOWER_PREMIUM_PRICE_LIMIT ) {
-                premiumRooms.add(price);
-                continue;
-            }
+        final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
+        splitPremiumAndEconomyCandidates(priceOrderedDesc, premiumCandidates, economyCandidates);
 
-            if ( economyRooms.size() < freeEconomyRooms && price < LOWER_PREMIUM_PRICE_LIMIT ) {
-                economyRooms.add(price);
-            }
+        List<Integer> premiumRooms, economyRooms;
+        int premiumCandidatesCount = premiumCandidates.size();
+        int economyCandidatesCount = economyCandidates.size();
+
+        if ( premiumCandidatesCount > freePremiumRooms && economyCandidatesCount > freeEconomyRooms ) {
+            premiumRooms = premiumCandidates.subList(0, freePremiumRooms);
+            economyRooms = economyCandidates.subList(0, freeEconomyRooms);
+            return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
+                    .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
+                    .reduce(0, Integer::sum));
+        } else if ( premiumCandidatesCount < freePremiumRooms && economyCandidatesCount < freeEconomyRooms ) {
+            premiumRooms = premiumCandidates;
+            economyRooms = economyCandidates;
+            return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
+                    .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
+                    .reduce(0, Integer::sum));
+        } else if ( premiumCandidatesCount > freePremiumRooms && economyCandidatesCount < freeEconomyRooms ) {
+            premiumRooms = premiumCandidates.subList(0, freePremiumRooms);
+            economyRooms = economyCandidates;
+            return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
+                    .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
+                    .reduce(0, Integer::sum));
+        } else if ( premiumCandidatesCount < freePremiumRooms ) {
+            int availableUpgrades = freePremiumRooms - premiumCandidatesCount;
+            premiumRooms = premiumCandidates;
+            premiumRooms.addAll(economyCandidates.subList(0, availableUpgrades));
+            economyRooms = economyCandidates.subList(availableUpgrades, availableUpgrades + freeEconomyRooms);
+            return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
+                    .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
+                    .reduce(0, Integer::sum));
         }
 
-        return RoomsOccupancyRate.of(premiumRooms.size(), premiumRooms.stream()
-                .reduce(0, Integer::sum), economyRooms.size(), economyRooms.stream()
-                .reduce(0, Integer::sum));
+        return RoomsOccupancyRate.of(0, 0, 0, 0);
+    }
+
+    private void splitPremiumAndEconomyCandidates(int[] priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
+        Arrays.stream(priceOrderedDesc)
+                .forEachOrdered(value -> {
+                    if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
+                        premiumCandidates.add(value);
+                    } else {
+                        economyCandidates.add(value);
+                    }
+                });
     }
 
     private int[] orderPricesDescending(final int[] requestedRoomPrices) {
