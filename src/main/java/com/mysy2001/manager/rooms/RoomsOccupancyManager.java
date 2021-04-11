@@ -38,7 +38,7 @@ public class RoomsOccupancyManager {
     private void splitPremiumAndEconomyCandidates(int[] priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
         Arrays.stream(priceOrderedDesc)
                 .forEachOrdered(value -> {
-                    if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
+                    if (value >= LOWER_PREMIUM_PRICE_LIMIT) {
                         premiumCandidates.add(value);
                     } else {
                         economyCandidates.add(value);
