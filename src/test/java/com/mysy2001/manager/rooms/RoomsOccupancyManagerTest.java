@@ -43,6 +43,18 @@ class RoomsOccupancyManagerTest {
 
         assertThat(result).isEqualTo(expected);
     }
+
+    @Test
+    void should_calculate_rooms_occupancy_when_available_are_2_premium_rooms_and_7_economy_rooms() {
+        final int freePremiumRooms = 2;
+        final int freeEconomyRooms = 7;
+
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+
+        final RoomsOccupancyRate expected = RoomsOccupancyRate.of(2, 583, 4, 189);
+
+        assertThat(result).isEqualTo(expected);
+    }
 }
 
 @Value(staticConstructor = "of")
