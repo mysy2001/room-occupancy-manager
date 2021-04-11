@@ -15,6 +15,7 @@
 	<description>Room Occupancy Manager</description>
 	<properties>
 		<java.version>11</java.version>
+		<dependency.assertj.version>3.18.1</dependency.assertj.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -30,6 +31,17 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${dependency.assertj.version}</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
