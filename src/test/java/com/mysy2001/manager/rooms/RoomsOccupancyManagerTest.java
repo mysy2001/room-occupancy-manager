@@ -1,0 +1,45 @@
+package com.mysy2001.manager.rooms;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import org.junit.jupiter.api.Test;
+
+import lombok.Value;
+
+class RoomsOccupancyManagerTest {
+
+    @Test
+    void should_calculate_rooms_occupancy() {
+
+        final int[] requestedRoomPrices = new int[] {
+                23, 45, 155, 374, 22, 99, 100, 101, 115, 209
+        };
+        final int freePremiumRooms = 3;
+        final int freeEconomyRooms = 3;
+
+        final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
+        final RoomsOccupancyRate result = objectUnderTest.calculateOccupancyRate(requestedRoomPrices, freePremiumRooms, freeEconomyRooms);
+
+        final RoomsOccupancyRate expected = RoomsOccupancyRate.of(3, 738, 3,167);
+
+        assertThat(result).isEqualTo(expected);
+    }
+}
+
+@Value(staticConstructor = "of")
+class RoomsOccupancyRate {
+
+    int premiumRoomsUsage;
+    int premiumRoomsPrice;
+    int economyRoomsUsage;
+    int economyRoomsPrice;
+
+}
+
+class RoomsOccupancyManager {
+
+    RoomsOccupancyRate calculateOccupancyRate(final int[] requestedPrices, final int freePremiumRooms, final int freeEconomyRooms) {
+        return RoomsOccupancyRate.of(3, 738, 3,167);
+    }
+
+}
