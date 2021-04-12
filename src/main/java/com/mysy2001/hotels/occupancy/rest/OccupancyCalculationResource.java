@@ -8,15 +8,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
-import com.mysy2001.hotels.occupancy.domain.RoomsOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 
 @RestController
 public class OccupancyCalculationResource {
 
-    private final RoomsOccupancyManager occupancyManager;
+    private final OccupancyManager occupancyManager;
 
     @Autowired
-    public OccupancyCalculationResource(final RoomsOccupancyManager roomsOccupancyManager) {
+    public OccupancyCalculationResource(final OccupancyManager roomsOccupancyManager) {
         this.occupancyManager = roomsOccupancyManager;
     }
 

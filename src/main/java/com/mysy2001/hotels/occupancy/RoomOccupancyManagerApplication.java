@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.mysy2001.hotels.occupancy.domain.RoomsOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 
 @SpringBootApplication
 public class RoomOccupancyManagerApplication {
@@ -20,7 +20,7 @@ public class RoomOccupancyManagerApplication {
 class RoomOccupancyManagerConfiguration {
 
 	@Bean
-	public RoomsOccupancyManager roomsOccupancyManager() {
-		return new RoomsOccupancyManager();
+	public OccupancyManager roomsOccupancyManager() {
+		return new OccupancyManager();
 	}
 }

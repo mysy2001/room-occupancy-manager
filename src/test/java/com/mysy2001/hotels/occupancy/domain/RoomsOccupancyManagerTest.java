@@ -8,7 +8,7 @@ class RoomsOccupancyManagerTest {
 
     private final int[] requestedRoomPrices = new int[] { 23, 45, 155, 374, 22, 99, 100, 101, 115, 209 };
 
-    private final RoomsOccupancyManager objectUnderTest = new RoomsOccupancyManager();
+    private final OccupancyManager objectUnderTest = new OccupancyManager();
 
     @Test
     void should_calculate_rooms_occupancy_when_available_are_3_premium_rooms_and_3_economy_rooms() {

@@ -9,14 +9,14 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
-import com.mysy2001.hotels.occupancy.domain.RoomsOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 
 class OccupancyCalculationResourceTest {
 
     @Test
     void should_invoke_OccupancyManager_calculateOccupancy_with_provided_parameter() {
 
-        final RoomsOccupancyManager occupancyManager = mock(RoomsOccupancyManager.class);
+        final OccupancyManager occupancyManager = mock(OccupancyManager.class);
         final OccupancyCalculationResource objectUnderTest = new OccupancyCalculationResource(occupancyManager);
 
         final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2, List.of(99, 28));

@@ -6,17 +6,19 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public class RoomsOccupancyManager {
+public class OccupancyManager {
 
     private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
 
     public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
-        final int[] prices = request.getPrices().stream().mapToInt(i -> i)
+        final int[] prices = request.getPrices()
+                .stream()
+                .mapToInt(i -> i)
                 .toArray();
         return this.calculateOccupancy(prices, request.getFreePremiumRooms(), request.getFreeEconomyRooms());
     }
 
-    public OccupancyCalculationResult calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
+    OccupancyCalculationResult calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
