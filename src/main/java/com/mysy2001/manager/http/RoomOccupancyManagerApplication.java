@@ -1,4 +1,4 @@
-package com.mysy2001.manager.rooms;
+package com.mysy2001.manager.http;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

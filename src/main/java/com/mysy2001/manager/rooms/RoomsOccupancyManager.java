@@ -6,13 +6,20 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
 
+import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationRequest;
 import com.mysy2001.manager.rooms.occupancy.OccupancyDetails;
 
 public class RoomsOccupancyManager {
 
     private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
 
-    RoomsOccupancyRate calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
+    public RoomsOccupancyRate calculateOccupancy(final OccupancyCalculationRequest request) {
+        final int[] prices = request.getPrices().stream().mapToInt(i -> i)
+                .toArray();
+        return this.calculateOccupancy(prices, request.getFreePremiumRooms(), request.getFreeEconomyRooms());
+    }
+
+    public RoomsOccupancyRate calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
@@ -22,7 +29,7 @@ public class RoomsOccupancyManager {
         int premiumCandidatesCount = premiumCandidates.size();
         int economyCandidatesCount = economyCandidates.size();
 
-        if (premiumCandidatesCount < freePremiumRooms && economyCandidatesCount > freeEconomyRooms) {
+        if ( premiumCandidatesCount < freePremiumRooms && economyCandidatesCount > freeEconomyRooms ) {
             int availableUpgrades = freePremiumRooms - premiumCandidatesCount;
             premiumRooms = premiumCandidates;
             premiumRooms.addAll(economyCandidates.subList(0, availableUpgrades));
@@ -39,8 +46,8 @@ public class RoomsOccupancyManager {
 
     private void splitPremiumAndEconomyCandidates(int[] priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
         Arrays.stream(priceOrderedDesc)
-                .forEachOrdered(value -> {
-                    if (value >= LOWER_PREMIUM_PRICE_LIMIT) {
+                .forEach(value -> {
+                    if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
                         premiumCandidates.add(value);
                     } else {
                         economyCandidates.add(value);
