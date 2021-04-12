@@ -1,14 +1,10 @@
-package com.mysy2001.manager.rooms;
+package com.mysy2001.hotels.occupancy.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.IntStream;
-
-import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationRequest;
-import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationResult;
-import com.mysy2001.manager.rooms.occupancy.OccupancyDetails;
 
 public class RoomsOccupancyManager {
 

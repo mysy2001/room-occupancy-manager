@@ -1,4 +1,4 @@
-package com.mysy2001.manager.rooms;
+package com.mysy2001.hotels.occupancy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

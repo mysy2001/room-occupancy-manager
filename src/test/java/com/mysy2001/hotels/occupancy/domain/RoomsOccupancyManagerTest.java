@@ -1,11 +1,8 @@
-package com.mysy2001.manager.rooms;
+package com.mysy2001.hotels.occupancy.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
-
-import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationResult;
-import com.mysy2001.manager.rooms.occupancy.OccupancyDetails;
 
 class RoomsOccupancyManagerTest {
 

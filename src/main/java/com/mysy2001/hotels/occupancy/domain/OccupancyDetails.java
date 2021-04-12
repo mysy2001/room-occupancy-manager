@@ -1,4 +1,4 @@
-package com.mysy2001.manager.rooms.occupancy;
+package com.mysy2001.hotels.occupancy.domain;
 
 import lombok.Value;
 

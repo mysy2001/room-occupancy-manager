@@ -1,13 +1,13 @@
-package com.mysy2001.manager.http;
+package com.mysy2001.hotels.occupancy.rest;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysy2001.manager.rooms.RoomsOccupancyManager;
-import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationResult;
-import com.mysy2001.manager.rooms.occupancy.OccupancyCalculationRequest;
+import com.mysy2001.hotels.occupancy.domain.RoomsOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
+import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 
 @RestController
 public class OccupancyCalculationResource {

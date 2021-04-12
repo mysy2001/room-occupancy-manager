@@ -1,4 +1,4 @@
-package com.mysy2001.manager.http;
+package com.mysy2001.hotels.occupancy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
