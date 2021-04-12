@@ -10,11 +10,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
