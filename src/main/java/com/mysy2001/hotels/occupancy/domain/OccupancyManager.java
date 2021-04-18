@@ -1,23 +1,20 @@
 package com.mysy2001.hotels.occupancy.domain;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class OccupancyManager {
 
     private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
 
-    public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
-        final int[] prices = request.getPrices()
-                .stream()
-                .mapToInt(i -> i)
-                .toArray();
+    private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
+    public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
         final AvailableRooms availableRooms = createAvailableRooms(request);
-        return this.calculateOccupancy(availableRooms, prices);
+        return this.calculateOccupancy(availableRooms, request.getPrices());
     }
 
     private AvailableRooms createAvailableRooms(final OccupancyCalculationRequest request) {
@@ -27,10 +24,10 @@ public class OccupancyManager {
         return availableRooms;
     }
 
-    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms, final int... requestedRoomPrices) {
-        final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
+    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms, final List<Integer> requestedRoomPrices) {
+        final List<Integer> orderedForBooking = bookingOrderStrategy.createBookingOrder(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
-        splitPremiumAndEconomyCandidates(priceOrderedDesc, premiumCandidates, economyCandidates);
+        splitPremiumAndEconomyCandidates(orderedForBooking, premiumCandidates, economyCandidates);
 
         List<Integer> premiumRooms, economyRooms;
         int premiumCandidatesCount = premiumCandidates.size();
@@ -53,9 +50,8 @@ public class OccupancyManager {
         return OccupancyCalculationResult.of(premiumOccupancyDetails, economyOccupancyDetails);
     }
 
-    private void splitPremiumAndEconomyCandidates(int[] priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
-        Arrays.stream(priceOrderedDesc)
-                .forEach(value -> {
+    private void splitPremiumAndEconomyCandidates(List<Integer> priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
+        priceOrderedDesc.forEach(value -> {
                     if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
                         premiumCandidates.add(value);
                     } else {
@@ -77,3 +73,4 @@ public class OccupancyManager {
                 .reduce(0, Integer::sum));
     }
 }
+

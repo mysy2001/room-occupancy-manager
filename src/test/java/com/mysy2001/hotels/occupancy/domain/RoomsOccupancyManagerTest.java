@@ -2,11 +2,13 @@ package com.mysy2001.hotels.occupancy.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class RoomsOccupancyManagerTest {
 
-    private final int[] requestedRoomPrices = new int[] { 23, 45, 155, 374, 22, 99, 100, 101, 115, 209 };
+    private final List<Integer> requestedRoomPrices = List.of(23, 45, 155, 374, 22, 99, 100, 101, 115, 209);
 
     private final OccupancyManager objectUnderTest = new OccupancyManager();
 
