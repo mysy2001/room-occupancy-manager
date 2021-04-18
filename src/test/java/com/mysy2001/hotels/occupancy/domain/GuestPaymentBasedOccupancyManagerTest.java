@@ -12,9 +12,11 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 import lombok.RequiredArgsConstructor;
 
@@ -42,7 +44,9 @@ class GuestPaymentBasedOccupancyManagerTest {
     @BeforeEach
     void setUp() {
         this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
-        this.objectUnderTest = new GuestPaymentBasedOccupancyManager(potentialGuestsDataProvider);
+        final GuestsRoomAssignmentsManager roomAssignmentsManager = new GuestsRoomAssignmentsManager(potentialGuestsDataProvider,
+                BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
+        this.objectUnderTest = new GuestPaymentBasedOccupancyManager(roomAssignmentsManager);
     }
 
     @Test

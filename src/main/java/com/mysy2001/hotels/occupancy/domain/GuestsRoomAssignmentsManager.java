@@ -11,7 +11,7 @@ import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
-class GuestsRoomAssignmentsManager {
+public class GuestsRoomAssignmentsManager {
 
     private final GuestsDataProvider<Integer> guestsDataProvider;
 
