@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+import com.mysy2001.hotels.occupancy.domain.rooms.GuestsRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
@@ -16,7 +17,7 @@ public class DefaultOccupancyManager implements OccupancyManager {
     public DefaultOccupancyManager(final GuestsRoomAssignmentsManager assignmentsManager) {
         this.assignmentsManager = assignmentsManager;
     }
-    
+
     @Override
     public OccupancyCalculationResult calculateOccupancy(final AvailableRooms rooms) {
         final RoomAssignments assignments = this.assignmentsManager.getGuestsRoomAssignments(rooms);
