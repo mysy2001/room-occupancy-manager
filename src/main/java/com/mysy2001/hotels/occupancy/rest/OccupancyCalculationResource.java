@@ -35,9 +35,8 @@ public class OccupancyCalculationResource {
     }
 
     private AvailableRooms createAvailableRooms(OccupancyCalculationRequest request) {
-        final AvailableRooms rooms = new AvailableRooms().withEconomyRooms(request.getFreeEconomyRooms())
+        return new AvailableRooms().withEconomyRooms(request.getFreeEconomyRooms())
                 .withPremiumRooms(request.getFreePremiumRooms());
-        return rooms;
     }
 
     @PostMapping(path = "/guests/payments", consumes = MediaType.APPLICATION_JSON_VALUE)
