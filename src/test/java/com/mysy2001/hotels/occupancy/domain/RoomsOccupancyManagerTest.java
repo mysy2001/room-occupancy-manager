@@ -24,8 +24,7 @@ class RoomsOccupancyManagerTest {
     private GuestsDataProvider potentialGuestsDataProvider;
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
-        return new AvailableRooms()
-                .withPremiumRooms(freePremiumRooms)
+        return new AvailableRooms().withPremiumRooms(freePremiumRooms)
                 .withEconomyRooms(freeEconomyRooms);
     }
 
@@ -50,7 +49,8 @@ class RoomsOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
+                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738), OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167)));
 
         assertThat(result).isEqualTo(expected);
 
@@ -63,7 +63,8 @@ class RoomsOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(6, 1054), OccupancyDetails.of(4, 189));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
+                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 6, 1054), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189)));
 
         assertThat(result).isEqualTo(expected);
     }
@@ -75,7 +76,8 @@ class RoomsOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(2, 583), OccupancyDetails.of(4, 189));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
+                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 2, 583), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189)));
 
         assertThat(result).isEqualTo(expected);
     }
@@ -87,7 +89,8 @@ class RoomsOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(7, 1153), OccupancyDetails.of(1, 45));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
+                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 7, 1153), OccupancyDetails.of(RoomCategory.ECONOMY, 1, 45)));
 
         assertThat(result).isEqualTo(expected);
     }

@@ -17,6 +17,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
 import com.mysy2001.hotels.occupancy.domain.OccupancyDetails;
+import com.mysy2001.hotels.occupancy.domain.RoomCategory;
 
 @Disabled
 @SpringBootTest(classes = RoomOccupancyManagerConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -30,7 +31,7 @@ class RoomOccupancyManagerApplicationTests {
 
     static Stream<Arguments> createParameters() {
         return Stream.of(Arguments.of(new OccupancyCalculationRequest(3, 3),
-                OccupancyCalculationResult.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167))));
+                OccupancyCalculationResult.of(List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738), OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167)))));
     }
 
     @ParameterizedTest
