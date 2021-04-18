@@ -21,7 +21,7 @@ class GuestsRoomAssignmentsManager {
 
     public RoomAssignments getGuestsRoomAssignments(final AvailableRooms rooms) {
         final RoomAssignments assignments = getGuestsRoomAssignments();
-        return assignments.selectForBooking(rooms);
+        return assignments.selectForBooking(rooms, new BookingWithUpgradeStrategy());
     }
 
     private RoomAssignments getGuestsRoomAssignments() {

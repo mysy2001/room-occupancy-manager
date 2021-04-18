@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 public class AvailableRooms {
 
-    private Map<RoomCategory, Integer> rooms;
+    private final Map<RoomCategory, Integer> rooms;
 
     public AvailableRooms() {
         this.rooms = new EnumMap<>(RoomCategory.class);
@@ -26,11 +26,19 @@ public class AvailableRooms {
         return this;
     }
 
-    public void setAvailableRooms(final RoomCategory category, int amount) {
+    public int getEconomyRooms() {
+        return this.getAvailableRooms(RoomCategory.ECONOMY);
+    }
+
+    public int getPremiumRooms() {
+        return this.getAvailableRooms(RoomCategory.PREMIUM);
+    }
+
+    private void setAvailableRooms(final RoomCategory category, int amount) {
         this.rooms.put(category, amount);
     }
 
-    public int getAvailableRooms(final RoomCategory category) {
+    private int getAvailableRooms(final RoomCategory category) {
         return this.rooms.getOrDefault(category, 0);
     }
 }
