@@ -5,9 +5,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
 
 @SpringBootApplication
 public class RoomOccupancyManagerApplication {
@@ -22,7 +23,7 @@ public class RoomOccupancyManagerApplication {
 class RoomOccupancyManagerConfiguration {
 
     @Bean
-    public GuestPaymentBasedOccupancyManager roomsOccupancyManager(final GuestsDataProvider guestsDataProvider) {
+    public OccupancyManager roomsOccupancyManager(final GuestsDataProvider guestsDataProvider) {
         return new GuestPaymentBasedOccupancyManager(guestsDataProvider);
     }
 

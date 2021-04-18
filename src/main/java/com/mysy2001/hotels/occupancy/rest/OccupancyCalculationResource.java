@@ -7,23 +7,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
-import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
 
 @RestController
 @RequestMapping(path = "/occupancy")
 public class OccupancyCalculationResource {
 
-    private final GuestPaymentBasedOccupancyManager occupancyManager;
+    private final OccupancyManager occupancyManager;
 
     private final GuestPaymentsDataManager guestsDataManager;
 
     @Autowired
-    public OccupancyCalculationResource(final GuestPaymentBasedOccupancyManager roomsOccupancyManager, final GuestPaymentsDataManager guestsDataManager) {
-        this.occupancyManager = roomsOccupancyManager;
+    public OccupancyCalculationResource(final OccupancyManager occupancyManager, final GuestPaymentsDataManager guestsDataManager) {
+        this.occupancyManager = occupancyManager;
         this.guestsDataManager = guestsDataManager;
     }
 

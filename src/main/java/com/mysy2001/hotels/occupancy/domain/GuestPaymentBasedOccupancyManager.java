@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
-public class GuestPaymentBasedOccupancyManager {
+public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
 
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
@@ -18,6 +18,7 @@ public class GuestPaymentBasedOccupancyManager {
         this.guestsDataProvider = guestsDataProvider;
     }
 
+    @Override
     public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
         final AvailableRooms availableRooms = createAvailableRooms(request);
         return this.calculateOccupancy(availableRooms);
