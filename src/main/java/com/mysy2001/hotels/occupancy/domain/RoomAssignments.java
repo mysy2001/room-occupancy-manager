@@ -7,15 +7,14 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
-class RoomCategoryAssignments {
+class RoomAssignments {
 
     private final Map<RoomCategory, List<RoomCategoryAssignment>> assignments;
 
-    public RoomCategoryAssignments() {
+    public RoomAssignments() {
         assignments = new EnumMap<>(RoomCategory.class);
         Arrays.stream(RoomCategory.values())
                 .forEach(category -> assignments.put(category, new ArrayList<>()));
-
     }
 
     public void append(RoomCategoryAssignment assignment) {
@@ -37,7 +36,7 @@ class RoomCategoryAssignments {
         return assignments.getOrDefault(category, Collections.emptyList());
     }
 
-    public RoomCategoryAssignments selectForBooking(final AvailableRooms availableRooms) {
+    public RoomAssignments selectForBooking(final AvailableRooms availableRooms) {
 
         final List<RoomCategoryAssignment> premiumCandidates = assignments.get(RoomCategory.PREMIUM);
         final List<RoomCategoryAssignment> economyCandidates = assignments.get(RoomCategory.ECONOMY);
@@ -47,7 +46,7 @@ class RoomCategoryAssignments {
         final int availablePremiumRooms = availableRooms.getAvailableRooms(RoomCategory.PREMIUM);
         final int availableEconomyRooms = availableRooms.getAvailableRooms(RoomCategory.ECONOMY);
 
-        final RoomCategoryAssignments result = new RoomCategoryAssignments();
+        final RoomAssignments result = new RoomAssignments();
         if ( premiumCandidatesCount < availablePremiumRooms && economyCandidatesCount > availableEconomyRooms ) {
             int availableUpgrades = availablePremiumRooms - premiumCandidatesCount;
             final List<RoomCategoryAssignment> premiumAssignments = premiumCandidates.subList(0, premiumCandidatesCount);
@@ -61,5 +60,7 @@ class RoomCategoryAssignments {
         }
         return result;
     }
-
 }
+
+
+

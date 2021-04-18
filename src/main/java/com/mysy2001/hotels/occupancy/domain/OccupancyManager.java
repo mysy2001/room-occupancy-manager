@@ -27,13 +27,13 @@ public class OccupancyManager {
     }
 
     OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {
-        final RoomCategoryAssignments assignments = getGuestsRoomAssignments();
-        final RoomCategoryAssignments bookingAssignments = assignments.selectForBooking(availableRooms);
+        final RoomAssignments assignments = getGuestsRoomAssignments();
+        final RoomAssignments bookingAssignments = assignments.selectForBooking(availableRooms);
         return createResult(bookingAssignments);
     }
 
-    private RoomCategoryAssignments getGuestsRoomAssignments() {
-        final RoomCategoryAssignments assignments = new RoomCategoryAssignments();
+    private RoomAssignments getGuestsRoomAssignments() {
+        final RoomAssignments assignments = new RoomAssignments();
         getGuestsData().forEach(integer -> {
             final RoomCategory category = roomCategoryProvider.getRoomCategory(integer);
             assignments.append(new RoomCategoryAssignment(category, integer));
@@ -45,7 +45,7 @@ public class OccupancyManager {
         return bookingOrderStrategy.createBookingOrder(guestsDataProvider.getGuestsData());
     }
 
-    private OccupancyCalculationResult createResult(final RoomCategoryAssignments assignments) {
+    private OccupancyCalculationResult createResult(final RoomAssignments assignments) {
         final List<OccupancyDetails> occupancyDetails = Arrays.stream(RoomCategory.values())
                 .map(category -> {
                     final List<RoomCategoryAssignment> categoryAssignments = assignments.getAssignments(category);
