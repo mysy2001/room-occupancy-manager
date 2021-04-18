@@ -19,7 +19,7 @@ class OccupancyCalculationResourceTest {
         final OccupancyManager occupancyManager = mock(OccupancyManager.class);
         final OccupancyCalculationResource objectUnderTest = new OccupancyCalculationResource(occupancyManager);
 
-        final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2, List.of(99, 28));
+        final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2);
         objectUnderTest.calculateOccupancy(request);
 
         verify(occupancyManager).calculateOccupancy(request);

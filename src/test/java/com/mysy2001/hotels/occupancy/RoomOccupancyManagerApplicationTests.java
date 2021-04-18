@@ -29,7 +29,7 @@ class RoomOccupancyManagerApplicationTests {
     private TestRestTemplate restTemplate;
 
     static Stream<Arguments> createParameters() {
-        return Stream.of(Arguments.of(new OccupancyCalculationRequest(3, 3, List.of(23, 45, 155, 374, 22, 99, 100, 101, 115, 209)),
+        return Stream.of(Arguments.of(new OccupancyCalculationRequest(3, 3),
                 OccupancyCalculationResult.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167))));
     }
 

@@ -9,9 +9,19 @@ public class OccupancyManager {
 
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
+    private final PotentialGuestsDataProvider guestsDataProvider;
+
+    public OccupancyManager() {
+        this.guestsDataProvider = null;
+    }
+
+    public OccupancyManager(final PotentialGuestsDataProvider guestsDataProvider) {
+        this.guestsDataProvider = guestsDataProvider;
+    }
+
     public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
         final AvailableRooms availableRooms = createAvailableRooms(request);
-        return this.calculateOccupancy(availableRooms, request.getPrices());
+        return this.calculateOccupancy(availableRooms);
     }
 
     private AvailableRooms createAvailableRooms(final OccupancyCalculationRequest request) {
@@ -21,8 +31,12 @@ public class OccupancyManager {
         return availableRooms;
     }
 
-    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms, final List<Integer> requestedRoomPrices) {
-        final List<Integer> orderedForBooking = bookingOrderStrategy.createBookingOrder(requestedRoomPrices);
+    private List<Integer> getGuestsData() {
+        return bookingOrderStrategy.createBookingOrder(guestsDataProvider.getGuestsData());
+    }
+
+    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {
+        final List<Integer> orderedForBooking = getGuestsData();
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
         splitPremiumAndEconomyCandidates(orderedForBooking, premiumCandidates, economyCandidates);
 
@@ -62,4 +76,9 @@ public class OccupancyManager {
         return OccupancyDetails.of(premiumRooms.size(), premiumRooms.stream()
                 .reduce(0, Integer::sum));
     }
+}
+
+interface PotentialGuestsDataProvider {
+
+    List<Integer> getGuestsData();
 }

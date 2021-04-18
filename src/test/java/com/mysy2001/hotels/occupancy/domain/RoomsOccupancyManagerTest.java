@@ -7,17 +7,21 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.RequiredArgsConstructor;
+
 class RoomsOccupancyManagerTest {
 
-//    private final List<Integer> requestedRoomPrices = List.of(23, 45, 155, 374, 22, 99, 100, 101, 115, 209);
-
     private static List<Integer> POTENTIAL_GUESTS;
-    private final OccupancyManager objectUnderTest = new OccupancyManager();
+
+    private OccupancyManager objectUnderTest;
+
+    private PotentialGuestsDataProvider potentialGuestsDataProvider;
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
         final AvailableRooms availableRooms = new AvailableRooms();
@@ -30,7 +34,14 @@ class RoomsOccupancyManagerTest {
     static void setUpAll() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         InputStream is = RoomsOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
-        POTENTIAL_GUESTS = objectMapper.readValue(is, new TypeReference<>() {});
+        POTENTIAL_GUESTS = objectMapper.readValue(is, new TypeReference<>() {
+        });
+    }
+
+    @BeforeEach
+    void setUp() {
+        this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
+        this.objectUnderTest = new OccupancyManager(potentialGuestsDataProvider);
     }
 
     @Test
@@ -38,7 +49,7 @@ class RoomsOccupancyManagerTest {
 
         final AvailableRooms availableRooms = createAvailableRooms(3, 3);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, POTENTIAL_GUESTS);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167));
 
@@ -51,7 +62,7 @@ class RoomsOccupancyManagerTest {
 
         final AvailableRooms availableRooms = createAvailableRooms(7, 5);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, POTENTIAL_GUESTS);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(6, 1054), OccupancyDetails.of(4, 189));
 
@@ -63,7 +74,7 @@ class RoomsOccupancyManagerTest {
 
         final AvailableRooms availableRooms = createAvailableRooms(2, 7);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, POTENTIAL_GUESTS);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(2, 583), OccupancyDetails.of(4, 189));
 
@@ -75,10 +86,21 @@ class RoomsOccupancyManagerTest {
 
         final AvailableRooms availableRooms = createAvailableRooms(7, 1);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, POTENTIAL_GUESTS);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(7, 1153), OccupancyDetails.of(1, 45));
 
         assertThat(result).isEqualTo(expected);
+    }
+}
+
+@RequiredArgsConstructor
+class PotentialGuestsDataProviderStub implements PotentialGuestsDataProvider {
+
+    private final List<Integer> guestsData;
+
+    @Override
+    public List<Integer> getGuestsData() {
+        return guestsData;
     }
 }
