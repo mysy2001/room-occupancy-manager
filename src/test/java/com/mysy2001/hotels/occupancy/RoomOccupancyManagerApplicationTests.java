@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
@@ -45,7 +47,7 @@ class RoomOccupancyManagerApplicationTests {
     void setUp() {
         final List<Integer> guestsData = new PotentialGuestsDataProviderStub().getGuestsData();
         final GuestPaymentsRequest request = new GuestPaymentsRequest(guestsData);
-        final ResponseEntity<Void> result = restTemplate.postForEntity("http://localhost:" + port + "/occupancy/guests/payments", request, Void.class);
+        restTemplate.postForEntity("http://localhost:" + port + "/occupancy/guests/payments", request, Void.class);
     }
 
     @ParameterizedTest
@@ -59,4 +61,32 @@ class RoomOccupancyManagerApplicationTests {
 
     }
 
+    @Test
+    void should_return_http_400_bad_request_when_OccupancyCalculationRequest_freePremiumRooms_is_lower_than_zero() {
+
+        final OccupancyCalculationRequest request = new OccupancyCalculationRequest(-1, 3);
+        final ResponseEntity<OccupancyCalculationResult> result = restTemplate.postForEntity("http://localhost:" + port + "/occupancy/calculation", request,
+                OccupancyCalculationResult.class);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void should_return_http_400_bad_request_when_OccupancyCalculationRequest_freeEconomyRooms_is_lower_than_zero() {
+
+        final OccupancyCalculationRequest request = new OccupancyCalculationRequest(3, -1);
+        final ResponseEntity<OccupancyCalculationResult> result = restTemplate.postForEntity("http://localhost:" + port + "/occupancy/calculation", request,
+                OccupancyCalculationResult.class);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    void should_return_http_400_bad_request_when_GuestPaymentsRequest_payments_contains_value_lower_than_zero() {
+
+        final GuestPaymentsRequest request = new GuestPaymentsRequest(List.of(1,2,-11));
+        final ResponseEntity<Void> result = restTemplate.postForEntity("http://localhost:" + port + "/occupancy/guests/payments", request, Void.class);
+
+        assertThat(result.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
 }

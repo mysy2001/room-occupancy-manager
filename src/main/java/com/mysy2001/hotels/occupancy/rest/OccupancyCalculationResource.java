@@ -1,5 +1,7 @@
 package com.mysy2001.hotels.occupancy.rest;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,7 +31,7 @@ public class OccupancyCalculationResource {
     }
 
     @PostMapping(path = "/calculation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public OccupancyCalculationResult calculateOccupancy(@RequestBody final OccupancyCalculationRequest request) {
+    public OccupancyCalculationResult calculateOccupancy(@Valid @RequestBody final OccupancyCalculationRequest request) {
         final AvailableRooms rooms = createAvailableRooms(request);
         return this.occupancyManager.calculateOccupancy(rooms);
     }
@@ -40,7 +42,7 @@ public class OccupancyCalculationResource {
     }
 
     @PostMapping(path = "/guests/payments", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void setGuestPayments(@RequestBody final GuestPaymentsRequest request) {
+    public void setGuestPayments(@Valid @RequestBody final GuestPaymentsRequest request) {
         guestsDataManager.setGuestsData(request);
     }
 }
