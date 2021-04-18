@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
-import com.mysy2001.hotels.occupancy.domain.rooms.GuestsRoomAssignmentsManager;
+import com.mysy2001.hotels.occupancy.domain.rooms.DefaultRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
@@ -45,7 +45,7 @@ class DefaultOccupancyManagerTest {
     @BeforeEach
     void setUp() {
         this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
-        final GuestsRoomAssignmentsManager roomAssignmentsManager = new GuestsRoomAssignmentsManager(potentialGuestsDataProvider,
+        final DefaultRoomAssignmentsManager roomAssignmentsManager = new DefaultRoomAssignmentsManager(potentialGuestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
         this.objectUnderTest = new DefaultOccupancyManager(roomAssignmentsManager);
     }

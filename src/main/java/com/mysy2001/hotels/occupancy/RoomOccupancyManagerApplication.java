@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.mysy2001.hotels.occupancy.domain.DefaultOccupancyManager;
-import com.mysy2001.hotels.occupancy.domain.rooms.GuestsRoomAssignmentsManager;
+import com.mysy2001.hotels.occupancy.domain.rooms.DefaultRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
@@ -28,7 +28,7 @@ class RoomOccupancyManagerConfiguration {
     @Bean
     public OccupancyManager roomsOccupancyManager(final GuestsDataProvider guestsDataProvider) {
 
-        final GuestsRoomAssignmentsManager roomAssignmentsManager = new GuestsRoomAssignmentsManager(guestsDataProvider,
+        final DefaultRoomAssignmentsManager roomAssignmentsManager = new DefaultRoomAssignmentsManager(guestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
         return new DefaultOccupancyManager(roomAssignmentsManager);
     }

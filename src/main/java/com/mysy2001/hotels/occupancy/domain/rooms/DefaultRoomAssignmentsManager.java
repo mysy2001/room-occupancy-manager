@@ -11,7 +11,7 @@ import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
-public class GuestsRoomAssignmentsManager {
+public class DefaultRoomAssignmentsManager {
 
     private final GuestsDataProvider<Integer> guestsDataProvider;
 
@@ -19,7 +19,7 @@ public class GuestsRoomAssignmentsManager {
 
     private final RoomCategoryProvider<Integer> roomCategoryProvider;
 
-    public GuestsRoomAssignmentsManager(final GuestsDataProvider<Integer> guestsDataProvider, final BookingOrderStrategy<Integer> bookingOrderStrategy,
+    public DefaultRoomAssignmentsManager(final GuestsDataProvider<Integer> guestsDataProvider, final BookingOrderStrategy<Integer> bookingOrderStrategy,
             final RoomCategoryProvider<Integer> roomCategoryProvider) {
         this.guestsDataProvider = guestsDataProvider;
         this.bookingOrderStrategy = bookingOrderStrategy;
