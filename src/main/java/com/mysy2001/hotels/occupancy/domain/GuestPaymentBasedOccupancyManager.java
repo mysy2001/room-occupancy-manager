@@ -8,14 +8,11 @@ import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
 public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
 
-    private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
-
-    private final GuestsDataProvider<Integer> guestsDataProvider;
-
-    private final RoomCategoryProvider<Integer> roomCategoryProvider = new PaymentBasedRoomCategoryProvider();
+    private final GuestsRoomAssignmentsManager assignmentsManager;
 
     public GuestPaymentBasedOccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
-        this.guestsDataProvider = guestsDataProvider;
+        this.assignmentsManager = new GuestsRoomAssignmentsManager(guestsDataProvider, new FromHighestPaymentBookingOrderStrategy(),
+                new PaymentBasedRoomCategoryProvider());
     }
 
     @Override
@@ -29,23 +26,9 @@ public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
                 .withEconomyRooms(request.getFreeEconomyRooms());
     }
 
-    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {
-        final RoomAssignments assignments = getGuestsRoomAssignments();
-        final RoomAssignments bookingAssignments = assignments.selectForBooking(availableRooms);
-        return createResult(bookingAssignments);
-    }
-
-    private RoomAssignments getGuestsRoomAssignments() {
-        final RoomAssignments assignments = new RoomAssignments();
-        getGuestsData().forEach(integer -> {
-            final RoomCategory category = roomCategoryProvider.getRoomCategory(integer);
-            assignments.append(new RoomCategoryAssignment(category, integer));
-        });
-        return assignments;
-    }
-
-    private List<Integer> getGuestsData() {
-        return bookingOrderStrategy.createBookingOrder(guestsDataProvider.getGuestsData());
+    OccupancyCalculationResult calculateOccupancy(final AvailableRooms rooms) {
+        final RoomAssignments assignments = this.assignmentsManager.getGuestsRoomAssignments(rooms);
+        return createResult(assignments);
     }
 
     private OccupancyCalculationResult createResult(final RoomAssignments assignments) {
@@ -64,6 +47,4 @@ public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
                 .reduce(0, Integer::sum));
     }
 }
-
-
 
