@@ -21,10 +21,9 @@ public class OccupancyManager {
     }
 
     private AvailableRooms createAvailableRooms(final OccupancyCalculationRequest request) {
-        final AvailableRooms availableRooms = new AvailableRooms();
-        availableRooms.setAvailableRooms(RoomCategory.PREMIUM, request.getFreePremiumRooms());
-        availableRooms.setAvailableRooms(RoomCategory.ECONOMY, request.getFreeEconomyRooms());
-        return availableRooms;
+        return new AvailableRooms()
+                .withPremiumRooms(request.getFreePremiumRooms())
+                .withEconomyRooms(request.getFreeEconomyRooms());
     }
 
     OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {

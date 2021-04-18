@@ -16,6 +16,16 @@ public class AvailableRooms {
         this.rooms = new EnumMap<>(RoomCategory.class);
     }
 
+    public AvailableRooms withPremiumRooms(final int amount) {
+        this.setAvailableRooms(RoomCategory.PREMIUM, amount);
+        return this;
+    }
+
+    public AvailableRooms withEconomyRooms(final int amount) {
+        this.setAvailableRooms(RoomCategory.ECONOMY, amount);
+        return this;
+    }
+
     public void setAvailableRooms(final RoomCategory category, int amount) {
         this.rooms.put(category, amount);
     }

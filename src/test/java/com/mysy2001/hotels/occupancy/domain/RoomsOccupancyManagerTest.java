@@ -24,10 +24,9 @@ class RoomsOccupancyManagerTest {
     private GuestsDataProvider potentialGuestsDataProvider;
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
-        final AvailableRooms availableRooms = new AvailableRooms();
-        availableRooms.setAvailableRooms(RoomCategory.PREMIUM, freePremiumRooms);
-        availableRooms.setAvailableRooms(RoomCategory.ECONOMY, freeEconomyRooms);
-        return availableRooms;
+        return new AvailableRooms()
+                .withPremiumRooms(freePremiumRooms)
+                .withEconomyRooms(freeEconomyRooms);
     }
 
     @BeforeAll
