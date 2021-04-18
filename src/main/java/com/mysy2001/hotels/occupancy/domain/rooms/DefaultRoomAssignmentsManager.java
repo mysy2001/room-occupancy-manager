@@ -5,13 +5,8 @@ import java.util.List;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingWithUpgradeStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
-import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
-import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
-import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
-import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
-import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
-public class DefaultRoomAssignmentsManager {
+public class DefaultRoomAssignmentsManager implements RoomAssignmentsManager {
 
     private final GuestsDataProvider<Integer> guestsDataProvider;
 
@@ -26,7 +21,8 @@ public class DefaultRoomAssignmentsManager {
         this.roomCategoryProvider = roomCategoryProvider;
     }
 
-    public RoomAssignments getGuestsRoomAssignments(final AvailableRooms rooms) {
+    @Override
+    public RoomAssignments getRoomAssignments(final AvailableRooms rooms) {
         final RoomAssignments assignments = getGuestsRoomAssignments();
         return assignments.selectForBooking(rooms, new BookingWithUpgradeStrategy());
     }
