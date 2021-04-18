@@ -11,18 +11,18 @@ import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
-import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
 
 @RestController
 @RequestMapping(path = "/occupancy")
 public class OccupancyCalculationResource {
 
-    private final OccupancyManager occupancyManager;
+    private final GuestPaymentBasedOccupancyManager occupancyManager;
 
     private final GuestPaymentsDataManager guestsDataManager;
 
     @Autowired
-    public OccupancyCalculationResource(final OccupancyManager roomsOccupancyManager, final GuestPaymentsDataManager guestsDataManager) {
+    public OccupancyCalculationResource(final GuestPaymentBasedOccupancyManager roomsOccupancyManager, final GuestPaymentsDataManager guestsDataManager) {
         this.occupancyManager = roomsOccupancyManager;
         this.guestsDataManager = guestsDataManager;
     }

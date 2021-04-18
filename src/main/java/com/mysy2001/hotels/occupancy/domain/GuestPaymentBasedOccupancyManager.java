@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
-public class OccupancyManager {
+public class GuestPaymentBasedOccupancyManager {
 
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
@@ -14,7 +14,7 @@ public class OccupancyManager {
 
     private final RoomCategoryProvider<Integer> roomCategoryProvider = new PaymentBasedRoomCategoryProvider();
 
-    public OccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
+    public GuestPaymentBasedOccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
         this.guestsDataProvider = guestsDataProvider;
     }
 
@@ -63,4 +63,6 @@ public class OccupancyManager {
                 .reduce(0, Integer::sum));
     }
 }
+
+
 

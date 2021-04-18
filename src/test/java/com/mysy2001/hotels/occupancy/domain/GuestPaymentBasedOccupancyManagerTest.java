@@ -16,13 +16,13 @@ import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
 import lombok.RequiredArgsConstructor;
 
-class RoomsOccupancyManagerTest {
+class GuestPaymentBasedOccupancyManagerTest {
 
     private static List<Integer> POTENTIAL_GUESTS;
 
-    private OccupancyManager objectUnderTest;
+    private GuestPaymentBasedOccupancyManager objectUnderTest;
 
-    private GuestsDataProvider potentialGuestsDataProvider;
+    private GuestsDataProvider<Integer> potentialGuestsDataProvider;
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
         return new AvailableRooms().withPremiumRooms(freePremiumRooms)
@@ -32,7 +32,7 @@ class RoomsOccupancyManagerTest {
     @BeforeAll
     static void setUpAll() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = RoomsOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
+        InputStream is = GuestPaymentBasedOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
         POTENTIAL_GUESTS = objectMapper.readValue(is, new TypeReference<>() {
         });
     }
@@ -40,7 +40,7 @@ class RoomsOccupancyManagerTest {
     @BeforeEach
     void setUp() {
         this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
-        this.objectUnderTest = new OccupancyManager(potentialGuestsDataProvider);
+        this.objectUnderTest = new GuestPaymentBasedOccupancyManager(potentialGuestsDataProvider);
     }
 
     @Test
@@ -98,7 +98,7 @@ class RoomsOccupancyManagerTest {
 }
 
 @RequiredArgsConstructor
-class PotentialGuestsDataProviderStub implements GuestsDataProvider {
+class PotentialGuestsDataProviderStub implements GuestsDataProvider<Integer> {
 
     private final List<Integer> guestsData;
 
