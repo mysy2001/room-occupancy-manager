@@ -20,11 +20,11 @@ import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 import lombok.RequiredArgsConstructor;
 
-class GuestPaymentBasedOccupancyManagerTest {
+class DefaultOccupancyManagerTest {
 
     private static List<Integer> POTENTIAL_GUESTS;
 
-    private GuestPaymentBasedOccupancyManager objectUnderTest;
+    private DefaultOccupancyManager objectUnderTest;
 
     private GuestsDataProvider<Integer> potentialGuestsDataProvider;
 
@@ -36,7 +36,7 @@ class GuestPaymentBasedOccupancyManagerTest {
     @BeforeAll
     static void setUpAll() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = GuestPaymentBasedOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
+        InputStream is = DefaultOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
         POTENTIAL_GUESTS = objectMapper.readValue(is, new TypeReference<>() {
         });
     }
@@ -46,7 +46,7 @@ class GuestPaymentBasedOccupancyManagerTest {
         this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
         final GuestsRoomAssignmentsManager roomAssignmentsManager = new GuestsRoomAssignmentsManager(potentialGuestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
-        this.objectUnderTest = new GuestPaymentBasedOccupancyManager(roomAssignmentsManager);
+        this.objectUnderTest = new DefaultOccupancyManager(roomAssignmentsManager);
     }
 
     @Test

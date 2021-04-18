@@ -9,11 +9,11 @@ import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 
-public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
+public class DefaultOccupancyManager implements OccupancyManager {
 
     private final GuestsRoomAssignmentsManager assignmentsManager;
 
-    public GuestPaymentBasedOccupancyManager(final GuestsRoomAssignmentsManager assignmentsManager) {
+    public DefaultOccupancyManager(final GuestsRoomAssignmentsManager assignmentsManager) {
         this.assignmentsManager = assignmentsManager;
     }
 

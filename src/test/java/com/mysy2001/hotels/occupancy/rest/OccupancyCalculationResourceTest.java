@@ -7,14 +7,14 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import org.junit.jupiter.api.Test;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.DefaultOccupancyManager;
 
 class OccupancyCalculationResourceTest {
 
     @Test
     void should_invoke_OccupancyManager_calculateOccupancy_with_provided_parameter() {
 
-        final GuestPaymentBasedOccupancyManager occupancyManager = mock(GuestPaymentBasedOccupancyManager.class);
+        final DefaultOccupancyManager occupancyManager = mock(DefaultOccupancyManager.class);
         final OccupancyCalculationResource objectUnderTest = new OccupancyCalculationResource(occupancyManager, null);
 
         final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2);

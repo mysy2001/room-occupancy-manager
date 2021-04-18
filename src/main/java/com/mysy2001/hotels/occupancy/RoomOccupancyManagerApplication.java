@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentBasedOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.DefaultOccupancyManager;
 import com.mysy2001.hotels.occupancy.domain.GuestsRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
@@ -30,7 +30,7 @@ class RoomOccupancyManagerConfiguration {
 
         final GuestsRoomAssignmentsManager roomAssignmentsManager = new GuestsRoomAssignmentsManager(guestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
-        return new GuestPaymentBasedOccupancyManager(roomAssignmentsManager);
+        return new DefaultOccupancyManager(roomAssignmentsManager);
     }
 
     @Bean
