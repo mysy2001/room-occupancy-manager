@@ -10,11 +10,11 @@ import java.util.Map;
 
 import com.mysy2001.hotels.occupancy.domain.booking.BookingStrategy;
 
-public class RoomAssignments {
+public class Rooms {
 
     private final Map<RoomCategory, List<RoomCategoryAssignment>> assignments;
 
-    public RoomAssignments() {
+    public Rooms() {
         assignments = new EnumMap<>(RoomCategory.class);
         Arrays.stream(RoomCategory.values())
                 .forEach(category -> assignments.put(category, new ArrayList<>()));
@@ -51,7 +51,7 @@ public class RoomAssignments {
         return assignments.getOrDefault(category, Collections.emptyList());
     }
 
-    public RoomAssignments selectForBooking(final AvailableRooms rooms, final BookingStrategy strategy) {
+    public Rooms selectForBooking(final AvailableRooms rooms, final BookingStrategy strategy) {
         return strategy.bookGuests(rooms, this);
     }
 }

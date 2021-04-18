@@ -22,18 +22,18 @@ public class DefaultRoomAssignmentsManager implements RoomAssignmentsManager {
     }
 
     @Override
-    public RoomAssignments getRoomAssignments(final AvailableRooms rooms) {
-        final RoomAssignments assignments = getGuestsRoomAssignments();
+    public Rooms getRoomAssignments(final AvailableRooms rooms) {
+        final Rooms assignments = getGuestsRoomAssignments();
         return assignments.selectForBooking(rooms, new BookingWithUpgradeStrategy());
     }
 
-    private RoomAssignments getGuestsRoomAssignments() {
-        final RoomAssignments assignments = new RoomAssignments();
+    private Rooms getGuestsRoomAssignments() {
+        final Rooms assignments = new Rooms();
         appendGuestsAssignments(assignments);
         return assignments;
     }
 
-    private void appendGuestsAssignments(final RoomAssignments assignments) {
+    private void appendGuestsAssignments(final Rooms assignments) {
         getGuestsData().forEach(integer -> {
             final RoomCategory category = roomCategoryProvider.getRoomCategory(integer);
             assignments.append(new RoomCategoryAssignment(category, integer));
