@@ -15,10 +15,10 @@ public class OccupancyManager {
                 .stream()
                 .mapToInt(i -> i)
                 .toArray();
-        return this.calculateOccupancy(prices, request.getFreePremiumRooms(), request.getFreeEconomyRooms());
+        return this.calculateOccupancy(request.getFreePremiumRooms(), request.getFreeEconomyRooms(), prices);
     }
 
-    OccupancyCalculationResult calculateOccupancy(final int[] requestedRoomPrices, final int freePremiumRooms, final int freeEconomyRooms) {
+    OccupancyCalculationResult calculateOccupancy(final int freePremiumRooms, final int freeEconomyRooms, final int... requestedRoomPrices) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
