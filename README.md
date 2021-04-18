@@ -1,5 +1,36 @@
 # Room Occupancy Manager
 
+### Expected tests results
+
+**Test 1**
+
+  * (input) Free Premium rooms: 3
+  * (input) Free Economy rooms: 3
+  * (output) Usage Premium: 3 (EUR 738)
+  * (output) Usage Economy: 3 (EUR 167)
+
+
+**Test 2**
+
+  * (input) Free Premium rooms: 7
+  * (input) Free Economy rooms: 5
+  * (output) Usage Premium: 6 (EUR 1054)
+  * (output) Usage Economy: 4 (EUR 189)
+
+**Test 3**
+
+  * (input) Free Premium rooms: 2
+  * (input) Free Economy rooms: 7
+  * (output) Usage Premium: 2 (EUR 583)
+  * (output) Usage Economy: 4 (EUR 189)
+
+**Test 4**
+
+  * (input) Free Premium rooms: 7
+  * (input) Free Economy rooms: 1
+  * (output) Usage Premium: 7 (EUR 1153)
+  * (output) Usage Economy: 1 (EUR 45)
+
 ### Build
 ```shell
 mvn clean package
