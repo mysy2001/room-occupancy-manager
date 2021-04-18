@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mysy2001.hotels.occupancy.domain.booking.BookingStrategy;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.DefaultRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignmentsManager;
@@ -15,13 +16,16 @@ public class DefaultOccupancyManager implements OccupancyManager {
 
     private final RoomAssignmentsManager assignmentsManager;
 
-    public DefaultOccupancyManager(final DefaultRoomAssignmentsManager assignmentsManager) {
+    private final BookingStrategy bookingStrategy;
+
+    public DefaultOccupancyManager(final DefaultRoomAssignmentsManager assignmentsManager, final BookingStrategy bookingStrategy) {
         this.assignmentsManager = assignmentsManager;
+        this.bookingStrategy = bookingStrategy;
     }
 
     @Override
     public OccupancyCalculationResult calculateOccupancy(final AvailableRooms rooms) {
-        final Rooms assignments = this.assignmentsManager.getRoomAssignments(rooms);
+        final Rooms assignments = this.assignmentsManager.getRoomAssignments(rooms, bookingStrategy);
         return createResult(assignments);
     }
 

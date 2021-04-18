@@ -3,7 +3,7 @@ package com.mysy2001.hotels.occupancy.domain.rooms;
 import java.util.List;
 
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
-import com.mysy2001.hotels.occupancy.domain.booking.BookingWithUpgradeStrategy;
+import com.mysy2001.hotels.occupancy.domain.booking.BookingStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
 public class DefaultRoomAssignmentsManager implements RoomAssignmentsManager {
@@ -22,9 +22,9 @@ public class DefaultRoomAssignmentsManager implements RoomAssignmentsManager {
     }
 
     @Override
-    public Rooms getRoomAssignments(final AvailableRooms availableRooms) {
+    public Rooms getRoomAssignments(final AvailableRooms availableRooms, final BookingStrategy bookingStrategy) {
         final Rooms rooms = getAllRooms();
-        return rooms.selectForBooking(availableRooms, new BookingWithUpgradeStrategy());
+        return rooms.selectForBooking(availableRooms, bookingStrategy);
     }
 
     private Rooms getAllRooms() {
