@@ -12,6 +12,7 @@ import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
 import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
+import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 
 @RestController
 @RequestMapping(path = "/occupancy")
@@ -29,7 +30,14 @@ public class OccupancyCalculationResource {
 
     @PostMapping(path = "/calculation", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public OccupancyCalculationResult calculateOccupancy(@RequestBody final OccupancyCalculationRequest request) {
-        return this.occupancyManager.calculateOccupancy(request);
+        final AvailableRooms rooms = createAvailableRooms(request);
+        return this.occupancyManager.calculateOccupancy(rooms);
+    }
+
+    private AvailableRooms createAvailableRooms(OccupancyCalculationRequest request) {
+        final AvailableRooms rooms = new AvailableRooms().withEconomyRooms(request.getFreeEconomyRooms())
+                .withPremiumRooms(request.getFreePremiumRooms());
+        return rooms;
     }
 
     @PostMapping(path = "/guests/payments", consumes = MediaType.APPLICATION_JSON_VALUE)

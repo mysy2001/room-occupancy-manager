@@ -16,19 +16,9 @@ public class DefaultOccupancyManager implements OccupancyManager {
     public DefaultOccupancyManager(final GuestsRoomAssignmentsManager assignmentsManager) {
         this.assignmentsManager = assignmentsManager;
     }
-
+    
     @Override
-    public OccupancyCalculationResult calculateOccupancy(final OccupancyCalculationRequest request) {
-        final AvailableRooms availableRooms = createAvailableRooms(request);
-        return this.calculateOccupancy(availableRooms);
-    }
-
-    private AvailableRooms createAvailableRooms(final OccupancyCalculationRequest request) {
-        return new AvailableRooms().withPremiumRooms(request.getFreePremiumRooms())
-                .withEconomyRooms(request.getFreeEconomyRooms());
-    }
-
-    OccupancyCalculationResult calculateOccupancy(final AvailableRooms rooms) {
+    public OccupancyCalculationResult calculateOccupancy(final AvailableRooms rooms) {
         final RoomAssignments assignments = this.assignmentsManager.getGuestsRoomAssignments(rooms);
         return createResult(assignments);
     }

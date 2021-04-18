@@ -6,8 +6,9 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 import org.junit.jupiter.api.Test;
 
-import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.DefaultOccupancyManager;
+import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
+import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 
 class OccupancyCalculationResourceTest {
 
@@ -20,7 +21,9 @@ class OccupancyCalculationResourceTest {
         final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2);
         objectUnderTest.calculateOccupancy(request);
 
-        verify(occupancyManager).calculateOccupancy(request);
+        final AvailableRooms rooms = new AvailableRooms().withPremiumRooms(request.getFreePremiumRooms())
+                .withEconomyRooms(request.getFreeEconomyRooms());
+        verify(occupancyManager).calculateOccupancy(rooms);
         verifyNoMoreInteractions(occupancyManager);
     }
 
