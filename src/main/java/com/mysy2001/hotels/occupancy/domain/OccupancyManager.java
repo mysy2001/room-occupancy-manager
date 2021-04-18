@@ -15,16 +15,19 @@ public class OccupancyManager {
                 .stream()
                 .mapToInt(i -> i)
                 .toArray();
-        return this.calculateOccupancy(request.getFreePremiumRooms(), request.getFreeEconomyRooms(), prices);
+
+        final AvailableRooms availableRooms = createAvailableRooms(request);
+        return this.calculateOccupancy(availableRooms, prices);
+    }
+
+    private AvailableRooms createAvailableRooms(final OccupancyCalculationRequest request) {
+        final AvailableRooms availableRooms = new AvailableRooms();
+        availableRooms.setAvailableRooms(RoomCategory.PREMIUM, request.getFreePremiumRooms());
+        availableRooms.setAvailableRooms(RoomCategory.ECONOMY, request.getFreeEconomyRooms());
+        return availableRooms;
     }
 
     OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms, final int... requestedRoomPrices) {
-        return calculateOccupancy(availableRooms.getAvailableRooms(RoomCategory.PREMIUM), availableRooms.getAvailableRooms(RoomCategory.ECONOMY),
-                requestedRoomPrices);
-    }
-
-    OccupancyCalculationResult calculateOccupancy(final int freePremiumRooms, final int freeEconomyRooms, final int... requestedRoomPrices) {
-
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
         splitPremiumAndEconomyCandidates(priceOrderedDesc, premiumCandidates, economyCandidates);
@@ -32,15 +35,17 @@ public class OccupancyManager {
         List<Integer> premiumRooms, economyRooms;
         int premiumCandidatesCount = premiumCandidates.size();
         int economyCandidatesCount = economyCandidates.size();
+        final int availablePremiumRooms = availableRooms.getAvailableRooms(RoomCategory.PREMIUM);
+        final int availableEconomyRooms = availableRooms.getAvailableRooms(RoomCategory.ECONOMY);
 
-        if ( premiumCandidatesCount < freePremiumRooms && economyCandidatesCount > freeEconomyRooms ) {
-            int availableUpgrades = freePremiumRooms - premiumCandidatesCount;
+        if ( premiumCandidatesCount < availablePremiumRooms && economyCandidatesCount > availableEconomyRooms ) {
+            int availableUpgrades = availablePremiumRooms - premiumCandidatesCount;
             premiumRooms = premiumCandidates;
             premiumRooms.addAll(economyCandidates.subList(0, availableUpgrades));
-            economyRooms = economyCandidates.subList(availableUpgrades, availableUpgrades + freeEconomyRooms);
+            economyRooms = economyCandidates.subList(availableUpgrades, availableUpgrades + availableEconomyRooms);
         } else {
-            premiumRooms = premiumCandidates.subList(0, Math.min(premiumCandidatesCount, freePremiumRooms));
-            economyRooms = economyCandidates.subList(0, Math.min(economyCandidatesCount, freeEconomyRooms));
+            premiumRooms = premiumCandidates.subList(0, Math.min(premiumCandidatesCount, availablePremiumRooms));
+            economyRooms = economyCandidates.subList(0, Math.min(economyCandidatesCount, availableEconomyRooms));
         }
 
         final OccupancyDetails premiumOccupancyDetails = createOccupancyDetails(premiumRooms);
