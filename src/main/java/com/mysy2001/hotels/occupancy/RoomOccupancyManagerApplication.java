@@ -27,7 +27,7 @@ public class RoomOccupancyManagerApplication {
 class RoomOccupancyManagerConfiguration {
 
     @Bean
-    public OccupancyManager roomsOccupancyManager(final GuestsDataProvider guestsDataProvider) {
+    public OccupancyManager roomsOccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
 
         final DefaultRoomAssignmentsManager roomAssignmentsManager = new DefaultRoomAssignmentsManager(guestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
@@ -35,7 +35,7 @@ class RoomOccupancyManagerConfiguration {
     }
 
     @Bean
-    public GuestsDataProvider guestsDataManager() {
+    public GuestsDataProvider<Integer> guestsDataManager() {
         return new GuestPaymentsDataManager();
     }
 }
