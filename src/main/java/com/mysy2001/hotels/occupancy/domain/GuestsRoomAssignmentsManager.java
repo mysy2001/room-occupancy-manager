@@ -3,6 +3,7 @@ package com.mysy2001.hotels.occupancy.domain;
 import java.util.List;
 
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 class GuestsRoomAssignmentsManager {
 

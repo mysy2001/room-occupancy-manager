@@ -1,9 +1,11 @@
-package com.mysy2001.hotels.occupancy.domain;
+package com.mysy2001.hotels.occupancy.domain.rooms;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import com.mysy2001.hotels.occupancy.domain.RoomCategory;
 
 class PaymentBasedRoomCategoryProviderTest {
 

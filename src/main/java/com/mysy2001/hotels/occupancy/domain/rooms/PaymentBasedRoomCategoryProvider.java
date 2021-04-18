@@ -1,9 +1,11 @@
-package com.mysy2001.hotels.occupancy.domain;
+package com.mysy2001.hotels.occupancy.domain.rooms;
+
+import com.mysy2001.hotels.occupancy.domain.RoomCategory;
 
 import lombok.Value;
 
 @Value
-class PaymentBasedRoomCategoryProvider implements RoomCategoryProvider<Integer> {
+public class PaymentBasedRoomCategoryProvider implements RoomCategoryProvider<Integer> {
 
     static final int PREMIUM_ROOM_MINIMAL_PRICE = 100;
 
