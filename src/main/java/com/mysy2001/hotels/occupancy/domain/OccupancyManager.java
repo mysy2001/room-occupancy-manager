@@ -5,15 +5,11 @@ import java.util.List;
 
 public class OccupancyManager {
 
-    private static final int LOWER_PREMIUM_PRICE_LIMIT = 100;
-
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
     private final GuestsDataProvider guestsDataProvider;
 
-    public OccupancyManager() {
-        this.guestsDataProvider = null;
-    }
+    private final RoomCategoryProvider<Integer> roomCategoryProvider = new PaymentBasedRoomCategoryProvider();
 
     public OccupancyManager(final GuestsDataProvider guestsDataProvider) {
         this.guestsDataProvider = guestsDataProvider;
@@ -29,10 +25,6 @@ public class OccupancyManager {
         availableRooms.setAvailableRooms(RoomCategory.PREMIUM, request.getFreePremiumRooms());
         availableRooms.setAvailableRooms(RoomCategory.ECONOMY, request.getFreeEconomyRooms());
         return availableRooms;
-    }
-
-    private List<Integer> getGuestsData() {
-        return bookingOrderStrategy.createBookingOrder(guestsDataProvider.getGuestsData());
     }
 
     OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {
@@ -60,11 +52,15 @@ public class OccupancyManager {
         return OccupancyCalculationResult.of(premiumOccupancyDetails, economyOccupancyDetails);
     }
 
-    private void splitPremiumAndEconomyCandidates(final List<Integer> premiumCandidates,
-            final List<Integer> economyCandidates) {
+    private List<Integer> getGuestsData() {
+        return bookingOrderStrategy.createBookingOrder(guestsDataProvider.getGuestsData());
+    }
+
+    private void splitPremiumAndEconomyCandidates(final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
 
         getGuestsData().forEach(value -> {
-            if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
+            final RoomCategory category = roomCategoryProvider.getRoomCategory(value);
+            if ( RoomCategory.PREMIUM.equals(category) ) {
                 premiumCandidates.add(value);
             } else {
                 economyCandidates.add(value);
