@@ -1,10 +1,7 @@
 package com.mysy2001.hotels.occupancy.domain;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class OccupancyManager {
 
@@ -50,22 +47,15 @@ public class OccupancyManager {
         return OccupancyCalculationResult.of(premiumOccupancyDetails, economyOccupancyDetails);
     }
 
-    private void splitPremiumAndEconomyCandidates(List<Integer> priceOrderedDesc, final List<Integer> premiumCandidates, final List<Integer> economyCandidates) {
+    private void splitPremiumAndEconomyCandidates(List<Integer> priceOrderedDesc, final List<Integer> premiumCandidates,
+            final List<Integer> economyCandidates) {
         priceOrderedDesc.forEach(value -> {
-                    if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
-                        premiumCandidates.add(value);
-                    } else {
-                        economyCandidates.add(value);
-                    }
-                });
-    }
-
-    private int[] orderPricesDescending(final int[] requestedRoomPrices) {
-        return IntStream.of(requestedRoomPrices)
-                .boxed()
-                .sorted(Comparator.reverseOrder())
-                .mapToInt(i -> i)
-                .toArray();
+            if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
+                premiumCandidates.add(value);
+            } else {
+                economyCandidates.add(value);
+            }
+        });
     }
 
     private OccupancyDetails createOccupancyDetails(List<Integer> premiumRooms) {
@@ -73,4 +63,3 @@ public class OccupancyManager {
                 .reduce(0, Integer::sum));
     }
 }
-
