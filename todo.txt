@@ -1,0 +1,3 @@
+todo:
+- replace com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment class with Room interface and its implementations: EconomyRoom, PremiumRoom.
+- add data checks and exceptions
