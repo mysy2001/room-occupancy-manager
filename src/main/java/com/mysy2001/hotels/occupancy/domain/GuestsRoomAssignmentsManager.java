@@ -2,6 +2,7 @@ package com.mysy2001.hotels.occupancy.domain;
 
 import java.util.List;
 
+import com.mysy2001.hotels.occupancy.domain.booking.BookingWithUpgradeStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
