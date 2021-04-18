@@ -2,16 +2,9 @@ package com.mysy2001.hotels.occupancy.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.List;
-
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysy2001.hotels.occupancy.PotentialGuestsDataProviderStub;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingWithUpgradeStrategy;
@@ -23,28 +16,17 @@ import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 class DefaultOccupancyManagerTest {
 
-    private static List<Integer> POTENTIAL_GUESTS;
-
     private DefaultOccupancyManager objectUnderTest;
 
-    private GuestsDataProvider<Integer> potentialGuestsDataProvider;
+    private final GuestsDataProvider<Integer> potentialGuestsDataProvider = new PotentialGuestsDataProviderStub();
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
         return new AvailableRooms().withPremiumRooms(freePremiumRooms)
                 .withEconomyRooms(freeEconomyRooms);
     }
 
-    @BeforeAll
-    static void setUpAll() throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        InputStream is = DefaultOccupancyManagerTest.class.getResourceAsStream("/potential-guests.json");
-        POTENTIAL_GUESTS = objectMapper.readValue(is, new TypeReference<>() {
-        });
-    }
-
     @BeforeEach
     void setUp() {
-        this.potentialGuestsDataProvider = new PotentialGuestsDataProviderStub(POTENTIAL_GUESTS);
         final DefaultRoomAssignmentsManager roomAssignmentsManager = new DefaultRoomAssignmentsManager(potentialGuestsDataProvider,
                 BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy, RoomCategoryProvider.paymentBasedRoomCategoryProvider);
         this.objectUnderTest = new DefaultOccupancyManager(roomAssignmentsManager, new BookingWithUpgradeStrategy());
