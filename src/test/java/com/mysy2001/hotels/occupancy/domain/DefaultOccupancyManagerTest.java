@@ -12,14 +12,13 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysy2001.hotels.occupancy.PotentialGuestsDataProviderStub;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.DefaultRoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
-
-import lombok.RequiredArgsConstructor;
 
 class DefaultOccupancyManagerTest {
 
@@ -57,8 +56,8 @@ class DefaultOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
-                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738), OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167)));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738),
+                OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167));
 
         assertThat(result).isEqualTo(expected);
 
@@ -71,8 +70,8 @@ class DefaultOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
-                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 6, 1054), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189)));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(RoomCategory.PREMIUM, 6, 1054),
+                OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189));
 
         assertThat(result).isEqualTo(expected);
     }
@@ -84,8 +83,8 @@ class DefaultOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
-                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 2, 583), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189)));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(RoomCategory.PREMIUM, 2, 583),
+                OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189));
 
         assertThat(result).isEqualTo(expected);
     }
@@ -97,20 +96,10 @@ class DefaultOccupancyManagerTest {
 
         final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms);
 
-        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(
-                List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 7, 1153), OccupancyDetails.of(RoomCategory.ECONOMY, 1, 45)));
+        final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(RoomCategory.PREMIUM, 7, 1153),
+                OccupancyDetails.of(RoomCategory.ECONOMY, 1, 45));
 
         assertThat(result).isEqualTo(expected);
     }
 }
 
-@RequiredArgsConstructor
-class PotentialGuestsDataProviderStub implements GuestsDataProvider<Integer> {
-
-    private final List<Integer> guestsData;
-
-    @Override
-    public List<Integer> getGuestsData() {
-        return guestsData;
-    }
-}

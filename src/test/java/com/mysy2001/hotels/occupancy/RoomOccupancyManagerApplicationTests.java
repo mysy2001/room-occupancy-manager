@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import java.util.stream.Stream;
 
-import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -13,14 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
 import com.mysy2001.hotels.occupancy.domain.OccupancyDetails;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 
-@Disabled
-@SpringBootTest(classes = RoomOccupancyManagerConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = RoomOccupancyManagerApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RoomOccupancyManagerApplicationTests {
 
     @LocalServerPort
@@ -31,16 +32,30 @@ class RoomOccupancyManagerApplicationTests {
 
     static Stream<Arguments> createParameters() {
         return Stream.of(Arguments.of(new OccupancyCalculationRequest(3, 3),
-                OccupancyCalculationResult.of(List.of(OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738), OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167)))));
+                new OccupancyDetails[] { OccupancyDetails.of(RoomCategory.PREMIUM, 3, 738), OccupancyDetails.of(RoomCategory.ECONOMY, 3, 167) }),
+                Arguments.of(new OccupancyCalculationRequest(7, 5),
+                        new OccupancyDetails[] { OccupancyDetails.of(RoomCategory.PREMIUM, 6, 1054), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189) }),
+                Arguments.of(new OccupancyCalculationRequest(2, 7),
+                        new OccupancyDetails[] { OccupancyDetails.of(RoomCategory.PREMIUM, 2, 583), OccupancyDetails.of(RoomCategory.ECONOMY, 4, 189) }),
+                Arguments.of(new OccupancyCalculationRequest(7, 1),
+                        new OccupancyDetails[] { OccupancyDetails.of(RoomCategory.PREMIUM, 7, 1153), OccupancyDetails.of(RoomCategory.ECONOMY, 1, 45) }));
+    }
+
+    @BeforeEach
+    void setUp() {
+        final List<Integer> guestsData = new PotentialGuestsDataProviderStub().getGuestsData();
+        final GuestPaymentsRequest request = new GuestPaymentsRequest(guestsData);
+        final ResponseEntity<Void> result = restTemplate.postForEntity("http://localhost:" + port + "/occupancy/guests/payments", request, Void.class);
     }
 
     @ParameterizedTest
     @MethodSource("createParameters")
-    void should_receive_expected_response(final OccupancyCalculationRequest body, final OccupancyCalculationResult expected) {
+    void should_receive_expected_response(final OccupancyCalculationRequest body, final OccupancyDetails... expected) {
         final OccupancyCalculationResult result = restTemplate.postForObject("http://localhost:" + port + "/occupancy/calculation", body,
                 OccupancyCalculationResult.class);
 
-        assertThat(result).isEqualTo(expected);
+        assertThat(result).isNotNull();
+        assertThat(result.getOccupancy()).containsExactlyInAnyOrder(expected);
 
     }
 

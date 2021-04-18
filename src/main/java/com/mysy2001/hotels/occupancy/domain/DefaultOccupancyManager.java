@@ -6,10 +6,10 @@ import java.util.stream.Collectors;
 
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.DefaultRoomAssignmentsManager;
-import com.mysy2001.hotels.occupancy.domain.rooms.Rooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignmentsManager;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
+import com.mysy2001.hotels.occupancy.domain.rooms.Rooms;
 
 public class DefaultOccupancyManager implements OccupancyManager {
 
@@ -26,13 +26,17 @@ public class DefaultOccupancyManager implements OccupancyManager {
     }
 
     private OccupancyCalculationResult createResult(final Rooms assignments) {
-        final List<OccupancyDetails> occupancyDetails = Arrays.stream(RoomCategory.values())
+        final List<OccupancyDetails> occupancyDetails = getOccupancyDetails(assignments);
+        return new OccupancyCalculationResult(occupancyDetails);
+    }
+
+    private List<OccupancyDetails> getOccupancyDetails(Rooms assignments) {
+        return Arrays.stream(RoomCategory.values())
                 .map(category -> {
                     final List<RoomCategoryAssignment> categoryAssignments = assignments.getAssignments(category);
                     return createOccupancyDetails(category, categoryAssignments);
                 })
                 .collect(Collectors.toList());
-        return OccupancyCalculationResult.of(occupancyDetails);
     }
 
     private OccupancyDetails createOccupancyDetails(final RoomCategory category, final List<RoomCategoryAssignment> assignments) {
