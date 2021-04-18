@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentsDataManager;
-import com.mysy2001.hotels.occupancy.domain.GuestsDataProvider;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.OccupancyManager;
 
 @SpringBootApplication

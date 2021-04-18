@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 
 import lombok.RequiredArgsConstructor;
 

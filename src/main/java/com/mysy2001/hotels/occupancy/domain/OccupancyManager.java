@@ -4,15 +4,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
+
 public class OccupancyManager {
 
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
-    private final GuestsDataProvider guestsDataProvider;
+    private final GuestsDataProvider<Integer> guestsDataProvider;
 
     private final RoomCategoryProvider<Integer> roomCategoryProvider = new PaymentBasedRoomCategoryProvider();
 
-    public OccupancyManager(final GuestsDataProvider guestsDataProvider) {
+    public OccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
         this.guestsDataProvider = guestsDataProvider;
     }
 

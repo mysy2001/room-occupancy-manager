@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentsRequest;
-import com.mysy2001.hotels.occupancy.domain.GuestPaymentsDataManager;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsRequest;
+import com.mysy2001.hotels.occupancy.domain.guests.GuestPaymentsDataManager;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
 import com.mysy2001.hotels.occupancy.domain.OccupancyManager;

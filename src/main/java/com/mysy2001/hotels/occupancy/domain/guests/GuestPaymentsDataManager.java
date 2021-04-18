@@ -1,9 +1,9 @@
-package com.mysy2001.hotels.occupancy.domain;
+package com.mysy2001.hotels.occupancy.domain.guests;
 
 import java.util.LinkedList;
 import java.util.List;
 
-public class GuestPaymentsDataManager implements GuestsDataProvider {
+public class GuestPaymentsDataManager implements GuestsDataProvider<Integer> {
 
     private final List<Integer> payments;
 
