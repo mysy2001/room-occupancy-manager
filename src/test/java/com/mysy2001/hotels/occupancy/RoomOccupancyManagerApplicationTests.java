@@ -17,7 +17,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationRequest;
 import com.mysy2001.hotels.occupancy.domain.OccupancyCalculationResult;
 import com.mysy2001.hotels.occupancy.domain.OccupancyDetails;
-import com.mysy2001.hotels.occupancy.domain.RoomCategory;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 
 @Disabled
 @SpringBootTest(classes = RoomOccupancyManagerConfiguration.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)

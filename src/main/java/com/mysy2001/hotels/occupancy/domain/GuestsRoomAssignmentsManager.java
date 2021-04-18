@@ -5,6 +5,9 @@ import java.util.List;
 import com.mysy2001.hotels.occupancy.domain.booking.BookingWithUpgradeStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 class GuestsRoomAssignmentsManager {

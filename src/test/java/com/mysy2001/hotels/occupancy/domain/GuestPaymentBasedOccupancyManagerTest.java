@@ -14,6 +14,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
 
 import lombok.RequiredArgsConstructor;
 

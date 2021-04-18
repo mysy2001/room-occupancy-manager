@@ -6,6 +6,9 @@ import java.util.stream.Collectors;
 
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryProvider;
 
 public class GuestPaymentBasedOccupancyManager implements OccupancyManager {

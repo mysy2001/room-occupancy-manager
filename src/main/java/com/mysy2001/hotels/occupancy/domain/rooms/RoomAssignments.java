@@ -1,4 +1,4 @@
-package com.mysy2001.hotels.occupancy.domain;
+package com.mysy2001.hotels.occupancy.domain.rooms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.mysy2001.hotels.occupancy.domain.booking.BookingStrategy;
-import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 
 public class RoomAssignments {
 

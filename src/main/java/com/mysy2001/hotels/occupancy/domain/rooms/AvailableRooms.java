@@ -3,8 +3,6 @@ package com.mysy2001.hotels.occupancy.domain.rooms;
 import java.util.EnumMap;
 import java.util.Map;
 
-import com.mysy2001.hotels.occupancy.domain.RoomCategory;
-
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 

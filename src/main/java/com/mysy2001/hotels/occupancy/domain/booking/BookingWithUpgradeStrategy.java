@@ -2,10 +2,10 @@ package com.mysy2001.hotels.occupancy.domain.booking;
 
 import java.util.List;
 
-import com.mysy2001.hotels.occupancy.domain.RoomAssignments;
-import com.mysy2001.hotels.occupancy.domain.RoomCategory;
-import com.mysy2001.hotels.occupancy.domain.RoomCategoryAssignment;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategory;
+import com.mysy2001.hotels.occupancy.domain.rooms.RoomCategoryAssignment;
 
 public class BookingWithUpgradeStrategy implements BookingStrategy {
 
