@@ -10,13 +10,19 @@ class RoomsOccupancyManagerTest {
 
     private final OccupancyManager objectUnderTest = new OccupancyManager();
 
+    private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
+        final AvailableRooms availableRooms = new AvailableRooms();
+        availableRooms.setAvailableRooms(RoomCategory.PREMIUM, freePremiumRooms);
+        availableRooms.setAvailableRooms(RoomCategory.ECONOMY, freeEconomyRooms);
+        return availableRooms;
+    }
+
     @Test
     void should_calculate_rooms_occupancy_when_available_are_3_premium_rooms_and_3_economy_rooms() {
 
-        final int freePremiumRooms = 3;
-        final int freeEconomyRooms = 3;
+        final AvailableRooms availableRooms = createAvailableRooms(3, 3);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(freePremiumRooms, freeEconomyRooms, requestedRoomPrices);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, requestedRoomPrices);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(3, 738), OccupancyDetails.of(3, 167));
 
@@ -27,10 +33,9 @@ class RoomsOccupancyManagerTest {
     @Test
     void should_calculate_rooms_occupancy_when_available_are_7_premium_rooms_and_5_economy_rooms() {
 
-        final int freePremiumRooms = 7;
-        final int freeEconomyRooms = 5;
+        final AvailableRooms availableRooms = createAvailableRooms(7, 5);
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(freePremiumRooms, freeEconomyRooms, requestedRoomPrices);
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, requestedRoomPrices);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(6, 1054), OccupancyDetails.of(4, 189));
 
@@ -39,10 +44,10 @@ class RoomsOccupancyManagerTest {
 
     @Test
     void should_calculate_rooms_occupancy_when_available_are_2_premium_rooms_and_7_economy_rooms() {
-        final int freePremiumRooms = 2;
-        final int freeEconomyRooms = 7;
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(freePremiumRooms, freeEconomyRooms, requestedRoomPrices);
+        final AvailableRooms availableRooms = createAvailableRooms(2, 7);
+
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, requestedRoomPrices);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(2, 583), OccupancyDetails.of(4, 189));
 
@@ -51,14 +56,13 @@ class RoomsOccupancyManagerTest {
 
     @Test
     void should_calculate_rooms_occupancy_when_available_are_7_premium_rooms_and_1_economy_room() {
-        final int freePremiumRooms = 7;
-        final int freeEconomyRooms = 1;
 
-        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(freePremiumRooms, freeEconomyRooms, requestedRoomPrices);
+        final AvailableRooms availableRooms = createAvailableRooms(7, 1);
+
+        final OccupancyCalculationResult result = objectUnderTest.calculateOccupancy(availableRooms, requestedRoomPrices);
 
         final OccupancyCalculationResult expected = OccupancyCalculationResult.of(OccupancyDetails.of(7, 1153), OccupancyDetails.of(1, 45));
 
         assertThat(result).isEqualTo(expected);
     }
 }
-

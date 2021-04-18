@@ -18,6 +18,11 @@ public class OccupancyManager {
         return this.calculateOccupancy(request.getFreePremiumRooms(), request.getFreeEconomyRooms(), prices);
     }
 
+    OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms, final int... requestedRoomPrices) {
+        return calculateOccupancy(availableRooms.getAvailableRooms(RoomCategory.PREMIUM), availableRooms.getAvailableRooms(RoomCategory.ECONOMY),
+                requestedRoomPrices);
+    }
+
     OccupancyCalculationResult calculateOccupancy(final int freePremiumRooms, final int freeEconomyRooms, final int... requestedRoomPrices) {
 
         final int[] priceOrderedDesc = orderPricesDescending(requestedRoomPrices);
