@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mysy2001.hotels.occupancy.domain.booking.BookingOrderStrategy;
 import com.mysy2001.hotels.occupancy.domain.guests.GuestsDataProvider;
 import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
 import com.mysy2001.hotels.occupancy.domain.rooms.RoomAssignments;
@@ -16,7 +17,7 @@ public class GuestPaymentBasedOccupancyManager implements OccupancyManager {
     private final GuestsRoomAssignmentsManager assignmentsManager;
 
     public GuestPaymentBasedOccupancyManager(final GuestsDataProvider<Integer> guestsDataProvider) {
-        this.assignmentsManager = new GuestsRoomAssignmentsManager(guestsDataProvider, new FromHighestPaymentBookingOrderStrategy(),
+        this.assignmentsManager = new GuestsRoomAssignmentsManager(guestsDataProvider, BookingOrderStrategy.fromHighestPaymentBookingOrderStrategy,
                 RoomCategoryProvider.paymentBasedRoomCategoryProvider);
     }
 

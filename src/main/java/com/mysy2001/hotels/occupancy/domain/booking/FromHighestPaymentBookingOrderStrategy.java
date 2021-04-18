@@ -1,4 +1,4 @@
-package com.mysy2001.hotels.occupancy.domain;
+package com.mysy2001.hotels.occupancy.domain.booking;
 
 import java.util.List;
 import java.util.stream.Collectors;
