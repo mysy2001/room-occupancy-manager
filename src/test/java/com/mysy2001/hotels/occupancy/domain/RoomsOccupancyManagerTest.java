@@ -21,7 +21,7 @@ class RoomsOccupancyManagerTest {
 
     private OccupancyManager objectUnderTest;
 
-    private PotentialGuestsDataProvider potentialGuestsDataProvider;
+    private GuestsDataProvider potentialGuestsDataProvider;
 
     private static AvailableRooms createAvailableRooms(final int freePremiumRooms, final int freeEconomyRooms) {
         final AvailableRooms availableRooms = new AvailableRooms();
@@ -95,7 +95,7 @@ class RoomsOccupancyManagerTest {
 }
 
 @RequiredArgsConstructor
-class PotentialGuestsDataProviderStub implements PotentialGuestsDataProvider {
+class PotentialGuestsDataProviderStub implements GuestsDataProvider {
 
     private final List<Integer> guestsData;
 

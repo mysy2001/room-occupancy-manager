@@ -17,7 +17,7 @@ class OccupancyCalculationResourceTest {
     void should_invoke_OccupancyManager_calculateOccupancy_with_provided_parameter() {
 
         final OccupancyManager occupancyManager = mock(OccupancyManager.class);
-        final OccupancyCalculationResource objectUnderTest = new OccupancyCalculationResource(occupancyManager);
+        final OccupancyCalculationResource objectUnderTest = new OccupancyCalculationResource(occupancyManager, null);
 
         final OccupancyCalculationRequest request = new OccupancyCalculationRequest(1, 2);
         objectUnderTest.calculateOccupancy(request);

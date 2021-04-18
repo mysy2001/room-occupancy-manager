@@ -9,13 +9,13 @@ public class OccupancyManager {
 
     private final BookingOrderStrategy<Integer> bookingOrderStrategy = new FromHighestPaymentBookingOrderStrategy();
 
-    private final PotentialGuestsDataProvider guestsDataProvider;
+    private final GuestsDataProvider guestsDataProvider;
 
     public OccupancyManager() {
         this.guestsDataProvider = null;
     }
 
-    public OccupancyManager(final PotentialGuestsDataProvider guestsDataProvider) {
+    public OccupancyManager(final GuestsDataProvider guestsDataProvider) {
         this.guestsDataProvider = guestsDataProvider;
     }
 
@@ -36,9 +36,8 @@ public class OccupancyManager {
     }
 
     OccupancyCalculationResult calculateOccupancy(final AvailableRooms availableRooms) {
-        final List<Integer> orderedForBooking = getGuestsData();
         final List<Integer> premiumCandidates = new ArrayList<>(), economyCandidates = new ArrayList<>();
-        splitPremiumAndEconomyCandidates(orderedForBooking, premiumCandidates, economyCandidates);
+        splitPremiumAndEconomyCandidates(premiumCandidates, economyCandidates);
 
         List<Integer> premiumRooms, economyRooms;
         int premiumCandidatesCount = premiumCandidates.size();
@@ -61,9 +60,10 @@ public class OccupancyManager {
         return OccupancyCalculationResult.of(premiumOccupancyDetails, economyOccupancyDetails);
     }
 
-    private void splitPremiumAndEconomyCandidates(List<Integer> priceOrderedDesc, final List<Integer> premiumCandidates,
+    private void splitPremiumAndEconomyCandidates(final List<Integer> premiumCandidates,
             final List<Integer> economyCandidates) {
-        priceOrderedDesc.forEach(value -> {
+
+        getGuestsData().forEach(value -> {
             if ( value >= LOWER_PREMIUM_PRICE_LIMIT ) {
                 premiumCandidates.add(value);
             } else {
@@ -78,7 +78,3 @@ public class OccupancyManager {
     }
 }
 
-interface PotentialGuestsDataProvider {
-
-    List<Integer> getGuestsData();
-}
