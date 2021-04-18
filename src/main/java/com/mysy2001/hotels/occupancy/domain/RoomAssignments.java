@@ -8,6 +8,8 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
+import com.mysy2001.hotels.occupancy.domain.rooms.AvailableRooms;
+
 class RoomAssignments {
 
     private final Map<RoomCategory, List<RoomCategoryAssignment>> assignments;
